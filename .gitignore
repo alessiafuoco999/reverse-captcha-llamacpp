@@ -1,0 +1,22 @@
+# llama.cpp Build (wird bei Bedarf neu kompiliert)
+llama.cpp/
+llama.cpp/build/
+
+# Modelle (zu groß, in /mnt/data/ ausgelagert)
+models/
+*.gguf
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Logs (temporär, können bei Bedarf gepusht werden)
+# *.log  # <- bewusst auskommentiert, da Logs für Reproduzierbarkeit wichtig
+
+# Temp-Dateien
+*.tmp
+*.swp
+*~
