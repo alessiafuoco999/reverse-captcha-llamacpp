@@ -1,11 +1,3 @@
-# llama.cpp Build (wird bei Bedarf neu kompiliert)
-llama.cpp/
-llama.cpp/build/
-
-# Modelle (zu groß, in /mnt/data/ ausgelagert)
-models/
-*.gguf
-
 # Python
 __pycache__/
 *.pyc
@@ -13,10 +5,25 @@ __pycache__/
 .venv/
 venv/
 
-# Logs (temporär, können bei Bedarf gepusht werden)
-# *.log  # <- bewusst auskommentiert, da Logs für Reproduzierbarkeit wichtig
+# llama.cpp Build
+llama.cpp/
+llama.cpp/build/
 
-# Temp-Dateien
+# Modelle
+models/
+*.gguf
+
+# Temp
 *.tmp
 *.swp
 *~
+.DS_Store
+
+# Verworfene Zwischenergebnisse (nur lokal)
+results_v2_preliminary/
+
+# Logs sind wichtig für Reproduzierbarkeit — NICHT ignorieren!
+
+# v2-Ergebnisse: kommen in separatem Commit nach vollständigem Lauf
+*/results_v2/*.sqlite
+qwen3-30b-a3b/logs/*_v2.log

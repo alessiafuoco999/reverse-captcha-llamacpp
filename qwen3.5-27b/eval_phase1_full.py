@@ -1,7 +1,7 @@
 """Reverse-CAPTCHA Evaluierung mit llama.cpp + Qwen3.5-27B."""
 import sys
-sys.path.insert(0, '/home/student/bachelorarbeit/data/reverse-captcha-qwen-agent/packs/reverse_captcha')
-sys.path.insert(0, '/home/student/bachelorarbeit/data/reverse-captcha-qwen-agent/src')
+sys.path.insert(0, '/home/student/bachelorarbeit/data/reverse-captcha-eval/packs/reverse_captcha')
+# (entfernt: alter Pfad)
 
 import requests
 import json
@@ -12,14 +12,14 @@ import yaml
 from pathlib import Path
 
 # Grader importieren
-sys.path.insert(0, '/home/student/bachelorarbeit/data/reverse-captcha-qwen-agent/packs/reverse_captcha')
+sys.path.insert(0, '/home/student/bachelorarbeit/data/reverse-captcha-eval/packs/reverse_captcha')
 from grader import grade
 
 # Konfiguration
 URL = "http://localhost:8080/v1/chat/completions"
 MODEL = "/mnt/data/gguf_models/Qwen3.5-27B-UD-Q4_K_XL.gguf"
 YAML_PATH = '/home/student/bachelorarbeit/data/reverse-captcha-llamacpp/yamls/phase1_original.yaml'
-DB_PATH = '/home/student/bachelorarbeit/data/reverse-captcha-llamacpp/qwen3.5-27b/results/phase1_original.sqlite'
+DB_PATH = '/home/student/bachelorarbeit/data/reverse-captcha-llamacpp/qwen3.5-27b/results_v2/phase1_original.sqlite'
 
 TOOLS = [{
     "type": "function",
@@ -47,7 +47,7 @@ def run_python(code: str) -> str:
         return f"Fehler: {e}"
 
 
-def agent_loop(system: str, user: str, max_turns: int = 3):
+def agent_loop(system: str, user: str, max_turns: int = 10):
     messages = [
         {"role": "system", "content": system},
         {"role": "user", "content": user}
@@ -61,7 +61,7 @@ def agent_loop(system: str, user: str, max_turns: int = 3):
                 "messages": messages,
                 "tools": TOOLS,
                 "tool_choice": "auto",
-                "max_tokens": 1024,
+                "max_tokens": 8192,
                 "temperature": 0.7,
                 "top_p": 0.8
             }, timeout=180)
